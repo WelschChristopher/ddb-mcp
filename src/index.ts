@@ -442,7 +442,7 @@ server.tool(
     casting_time_type: z
       .enum(["Action", "Bonus Action", "Reaction", "Minute", "Hour", "No Action", "Special"])
       .describe("Casting time type"),
-    casting_time_amount: z.number().optional().describe("Casting time amount (default: 1)"),
+    casting_time_amount: z.number().int().optional().describe("Casting time amount (default: 1)"),
     reaction_description: z.string().optional().describe("Reaction trigger description (when casting_time_type is Reaction)"),
     components_verbal: z.boolean().optional().describe("Verbal component (default: true)"),
     components_somatic: z.boolean().optional().describe("Somatic component (default: true)"),
@@ -451,11 +451,11 @@ server.tool(
     range_type: z
       .enum(["Self", "Touch", "Ranged", "Sight", "Unlimited"])
       .describe("Spell range type"),
-    range_distance: z.number().optional().describe("Range distance in feet (when range_type is Ranged)"),
+    range_distance: z.number().int().optional().describe("Range distance in feet (when range_type is Ranged)"),
     duration_type: z
       .enum(["Instantaneous", "Concentration", "Time", "Special", "Until Dispelled", "Until Dispelled or Triggered"])
       .describe("Spell duration type"),
-    duration_amount: z.number().optional().describe("Duration amount (e.g. 1 for '1 Minute')"),
+    duration_amount: z.number().int().optional().describe("Duration amount (e.g. 1 for '1 Minute')"),
     duration_unit: z
       .enum(["Round", "Minute", "Hour", "Day"])
       .optional()
@@ -493,7 +493,7 @@ server.tool(
   "Set charges on an existing homebrew magic item (number of charges, reset condition, reset description). Requires the item's edit URL.",
   {
     edit_url: z.string().describe("The D&D Beyond edit URL for the item (e.g. https://www.dndbeyond.com/homebrew/creations/magic-items/12345-item-name/edit)"),
-    number_of_charges: z.number().describe("Total number of charges"),
+    number_of_charges: z.number().int().describe("Total number of charges"),
     reset_condition: z
       .enum(["Short Rest", "Long Rest", "Dawn", "Other", "None, Consumable"])
       .describe("When charges reset"),
@@ -529,7 +529,7 @@ item's edit page and click ADD A MODIFIER to see available options.`,
     edit_url: z.string().describe("The D&D Beyond edit URL for the item"),
     modifier_type: z.string().describe("Modifier type (e.g. 'Bonus', 'Resistance', 'Sense')"),
     modifier_subtype: z.string().describe("Modifier subtype (e.g. 'Sorcerer Spell Attacks', 'Armor Class')"),
-    fixed_value: z.number().optional().describe("Fixed bonus value (e.g. 2 for +2)"),
+    fixed_value: z.number().int().optional().describe("Fixed bonus value (e.g. 2 for +2)"),
     requires_attunement: z.boolean().optional().describe("Whether the modifier requires attunement"),
   },
   async ({ edit_url, modifier_type, modifier_subtype, fixed_value, requires_attunement }) => {
@@ -551,9 +551,9 @@ server.tool(
   {
     edit_url: z.string().describe("The D&D Beyond edit URL for the item"),
     spell_name: z.string().describe("Name of the spell to attach (must exist on D&D Beyond or in your homebrew)"),
-    min_charges: z.number().optional().describe("Minimum charges to cast (e.g. 1)"),
-    max_charges: z.number().optional().describe("Maximum charges to cast (e.g. 3)"),
-    cast_at_level: z.number().optional().describe("Spell level to cast at (e.g. 1)"),
+    min_charges: z.number().int().optional().describe("Minimum charges to cast (e.g. 1)"),
+    max_charges: z.number().int().optional().describe("Maximum charges to cast (e.g. 3)"),
+    cast_at_level: z.number().int().optional().describe("Spell level to cast at (e.g. 1)"),
     restriction: z.string().optional().describe("Restriction or notes about the spell usage"),
   },
   async ({ edit_url, spell_name, min_charges, max_charges, cast_at_level, restriction }) => {

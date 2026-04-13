@@ -44,6 +44,8 @@ export async function interact(context, action, selector, value) {
                 const fn = new Function(code);
                 return fn();
             }, selector);
+            if (result === undefined || result === null)
+                return "undefined";
             return typeof result === "string" ? result : JSON.stringify(result, null, 2);
         }
         case "select": {
